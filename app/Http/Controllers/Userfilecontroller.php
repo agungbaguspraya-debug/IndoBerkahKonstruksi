@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\UserFile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+class UserFileController extends Controller
+{
+    public function store(Request $request)
+    {
+        $request->validate([
+            'file'        => 'required|file|mimes:jpg,jpeg,png,webp,pdf|max:10240',
+            'title'       => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $path = $request->file('file')->store('user-designs/' . $user->id, 'public');
+
+        UserFile::create([
+            'user_id'     => $user->id,
+            'title'       => $request->title,
+            'description' => $request->description,
+            'file_path'   => $path,
+            'type'        => 'design',
+        ]);
+
+        return back()->with('upload_success', 'Desain berhasil diunggah! Tim kami akan segera meninjaunya.');
+    }
+
+    public function destroy(UserFile $userFile)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        abort_if($userFile->user_id !== $user->id, 403);
+
+        Storage::disk('public')->delete($userFile->file_path);
+        $userFile->delete();
+
+        return back()->with('upload_success', 'File berhasil dihapus.');
+    }
+}
