@@ -12,9 +12,10 @@ class UserFileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file'        => 'required|file|mimes:jpg,jpeg,png,webp,pdf|max:10240',
+            'file'        => 'required|file|mimes:jpg,jpeg,png,webp,pdf|max:5120',
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
+            'project_id'  => 'required|exists:projects,id',
         ]);
 
         /** @var \App\Models\User $user */
@@ -24,6 +25,7 @@ class UserFileController extends Controller
 
         UserFile::create([
             'user_id'     => $user->id,
+            'project_id'  => $request->project_id,
             'title'       => $request->title,
             'description' => $request->description,
             'file_path'   => $path,

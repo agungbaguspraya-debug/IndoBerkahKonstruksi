@@ -21,13 +21,17 @@
             <!-- Grid logo — responsif dari 3 kolom (mobile) sampai 8 kolom (desktop) -->
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6 items-center">
 
-                @for($i = 1; $i <= 32; $i++)
-                <a href="https://example{{ $i }}.com" target="_blank" class="flex justify-center">
-                    <img src="{{ asset('image/LogoClient/client_220406070617_yayasan-guna-widya-paramesthi.webp') }}"
-                         class="h-8 md:h-12 object-contain grayscale hover:grayscale-0 transition duration-300"
-                         alt="Client {{ $i }}">
+                @php
+                    $logos = \App\Models\ClientPartner::all();
+                @endphp
+
+                @foreach($logos as $logo)
+                <a href="{{ $logo->link ?? '#' }}" target="_blank" class="flex justify-center">
+                    <img src="{{ asset('storage/' . $logo->image) }}"
+                         class="h-8 md:h-12 object-contain transition duration-300 hover:scale-110"
+                         alt="{{ $logo->name }}">
                 </a>
-                @endfor
+                @endforeach
 
             </div>
         </div>

@@ -1,217 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Indo Berkah Konstruksi</title>
+    <title>Indo Berkah Konstruksi - Mahakarya Arsitektur & Konstruksi Premium</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Indo Berkah Konstruksi melayani jasa pembangunan rumah, gedung komersial, infrastruktur, dan renovasi dengan kualitas premium dan ketahanan struktur terbaik.">
+    <meta name="keywords" content="kontraktor bangunan, jasa konstruksi, bangun rumah, renovasi gedung, indo berkah konstruksi, arsitektur mewah">
+    <meta name="author" content="Indo Berkah Konstruksi">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Untuk share di WhatsApp, Facebook, dll) -->
+    <meta property="og:title" content="Indo Berkah Konstruksi - Layanan Konstruksi Premium">
+    <meta property="og:description" content="Kami memadukan estetika modern dengan ketahanan struktur. Temukan layanan pembangunan rumah, gedung komersial, dan renovasi terbaik.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ asset('image/Logo/Logo PT. Indo Berkah.png') }}">
+    
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Custom Swiper Navigation Color */
+        .swiper-button-next, .swiper-button-prev {
+            color: #C5A880 !important;
+        }
+        .swiper-pagination-bullet-active {
+            background: #C5A880 !important;
+        }
+    </style>
 </head>
-<body class="bg-gray">
+<body class="bg-[#FAFAFA] text-gray-900 font-sans antialiased overflow-x-hidden">
+
 @include('layout.header')    
 
-<!-- HERO -->
-<section id="hero"
-    class="w-full h-svh min-h-[600px] md:h-[830px] relative bg-cover bg-center bg-[#1A1613]/50 bg-blend-multiply transition-all duration-1000">
-
-    <div class="absolute inset-0 bg-black/5"></div>
-
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10 px-6">
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-            Menjaga Kualitas <br> Mewujud Berkah
-        </h1>
+<!-- =======================
+     HERO CAROUSEL SECTION
+======================== -->
+<section id="hero" class="relative w-full h-screen min-h-[600px] md:min-h-[700px] flex flex-col md:flex-row overflow-hidden bg-[#3b2d2a]">
     
-        <p class="mt-4 md:mt-5 text-base md:text-lg max-w-sm md:max-w-md mx-auto">
-            Ciptakan rumah impian dengan desain modern,
-            elegan, dan minimalis.
-        </p>
-    
-        <button class="mt-16 md:mt-32 px-6 py-3 bg-[#C5A880] text-[#1E293B] rounded-full hover:bg-zinc-200 transition">
-            <a href="/portofolio">pelajari lebih lanjut</a>
-        </button>
+    @php
+        $heroImg = !empty($settings['hero_image']) ? (str_starts_with($settings['hero_image'], 'image/') ? asset($settings['hero_image']) : asset('storage/' . $settings['hero_image'])) : asset('image/ElementProgram/rumah2.jpg');
+    @endphp
+
+    <!-- Mobile Background Overlay (Hanya tampil di layar kecil) -->
+    <div class="absolute inset-0 z-0 block md:hidden">
+        <img src="{{ $heroImg }}" alt="Main Project Mobile" class="w-full h-full object-cover brightness-[0.4]">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#3b2d2a] via-[#3b2d2a]/80 to-transparent"></div>
+    </div>
+
+    <!-- Left Side: Main Vertical Image (45%) -->
+    <div class="relative w-[45%] h-full z-10 hidden md:block">
+        <img src="{{ $heroImg }}" alt="Main Project" class="w-full h-full object-cover bg-gray-200 brightness-50">
+    </div>
+
+    <!-- Right Side: Dark Brown Content Area (55%) -->
+    <div class="relative w-full md:w-[55%] h-full flex flex-col justify-center px-6 md:px-16 lg:px-24 z-20 pt-24 md:pt-0">
+        
+        <!-- Text Content -->
+        <div class="max-w-xl relative z-30" data-aos="fade-up" data-aos-duration="1500">
+            <h1 class="text-[2.5rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-medium text-white mb-4 md:mb-6 tracking-wide uppercase">
+                {{ $settings['hero_title_line1'] ?? 'Menjaga Kualitas' }} <br>
+                <span class="italic font-light tracking-normal lowercase text-gray-300">{{ $settings['hero_title_line2'] ?? 'mewujud' }}</span> <br>
+                {{ $settings['hero_title_line3'] ?? 'Berkah.' }}
+            </h1>
+            <p class="text-gray-100 text-xs sm:text-sm md:text-base font-light leading-relaxed max-w-sm mb-10 opacity-90 md:opacity-100">
+                {{ $settings['hero_subtitle'] ?? 'Membangun lingkungan masa depan yang berdampak. Kami memadukan estetika modern dengan ketahanan struktur tak tertandingi.' }}
+            </p>
+        </div>
+
+        <!-- Overlapping Image 1 (Center) -->
+        <div class="absolute top-[35%] -left-[15%] w-[320px] h-[400px] z-20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] hidden lg:block" data-aos="fade-left" data-aos-duration="1500">
+            <img src="{{ $heroImg }}" alt="Overlap 1" class="w-full h-full object-cover bg-gray-300 brightness-50">
+        </div>
+
+        <!-- Overlapping Image 2 (Bottom Right) -->
+        <div class="absolute -bottom-10 right-[10%] w-[250px] h-[300px] z-20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] hidden lg:block" data-aos="fade-up" data-aos-duration="1500">
+            <img src="{{ $heroImg }}" alt="Overlap 2" class="w-full h-full object-cover bg-gray-400 brightness-50">
+        </div>
+
+        <!-- Bottom Left Text -->
+        <div class="absolute bottom-10 md:bottom-16 left-6 md:left-16 z-30">
+            <h3 class="text-white text-base md:text-xl tracking-widest font-medium uppercase mb-2">
+                {{ $settings['hero_badge_title'] ?? 'Fokus pada Kualitas' }}
+            </h3>
+            <p class="text-[10px] md:text-xs text-gray-300 md:text-gray-400 font-light border-t border-gray-500/50 md:border-gray-600/50 pt-2 md:pt-3 w-40 md:w-48">
+                {{ $settings['hero_badge_subtitle'] ?? 'Presisi tingkat tinggi dalam setiap tahap konstruksi.' }}
+            </p>
+        </div>
     </div>
 </section>
 
 
-<!-- PROGRAM KONSTRUKSI -->
-<section id="program" class="w-full bg-[#F8F8F8] py-16 md:py-20 px-4">
-
-    <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold text-black mb-3">
-            Program Kontruksi
-        </h2>
-    </div>
-
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <!-- Card 1 -->
-        <div class="bg-white rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition duration-300">
-            <div class="mb-5 md:mb-6">
-                <img src="image/ElementProgram/building-construction-industry-18-svgrepo-com.svg" alt="" class="w-14 h-14 md:w-16 md:h-16">
-            </div>
-            <h3 class="text-lg md:text-xl font-semibold text-black mb-3 md:mb-4">
-                Renovasi Bangunan
-            </h3>
-            <p class="text-gray-500 leading-7 md:leading-8 text-sm md:text-base">
-                Kami menawarkan solusi renovasi dan perbaikan bangunan yang
-                efisien untuk meningkatkan fungsi, estetika, dan kenyamanan
-                properti Anda.
-            </p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="bg-white rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition duration-300">
-            <div class="mb-5 md:mb-6">
-                <img src="image/ElementProgram/blueprint-building-construction-svgrepo-com.svg" alt="" class="w-14 h-14 md:w-16 md:h-16">
-            </div>
-            <h3 class="text-lg md:text-xl font-semibold text-black mb-3 md:mb-4">
-                Konsultasi Konstruksi
-            </h3>
-            <p class="text-gray-500 leading-7 md:leading-8 text-sm md:text-base">
-                Layanan ini mencakup konsultasi perencanaan desain dan
-                konstruksi, membantu Anda mewujudkan proyek sesuai anggaran
-                dan kebutuhan.
-            </p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition duration-300">
-            <div class="mb-5 md:mb-6">
-                <img src="image/ElementProgram/building-construction-industry-5-svgrepo-com.svg" alt="" class="w-14 h-14 md:w-16 md:h-16">
-            </div>
-            <h3 class="text-lg md:text-xl font-semibold text-black mb-3 md:mb-4">
-                Gedung Komersial
-            </h3>
-            <p class="text-gray-500 leading-7 md:leading-8 text-sm md:text-base">
-                Indo Berkah Konstruksi melayani pembangunan gedung komersial
-                seperti kantor, ruko, dan hotel dengan fokus pada efisiensi
-                serta ketahanan struktur.
-            </p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="bg-white rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition duration-300">
-            <div class="mb-5 md:mb-6">
-                <img src="image/ElementProgram/building-construction-industry-20-svgrepo-com.svg" alt="" class="w-14 h-14 md:w-16 md:h-16">
-            </div>
-            <h3 class="text-lg md:text-xl font-semibold text-black mb-3 md:mb-4">
-                Pembangunan Rumah
-            </h3>
-            <p class="text-gray-500 leading-7 md:leading-8 text-sm md:text-base">
-                Kami menyediakan layanan pembangunan rumah dari tahap
-                perencanaan hingga selesai dengan desain yang disesuaikan
-                kebutuhan dan kualitas konstruksi terbaik.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="flex flex-col md:flex-row min-h-[50vh] md:h-[65vh]">
-    
-   
-    <div
-        class="w-full md:w-[75%] h-[50vw] min-h-[280px] md:h-auto bg-cover bg-center relative"
-        style="background-image:url('image/pexels-introspectivedsgn-18426839.jpg'); background-position: right center;"
-    >
-        <div class="absolute inset-0 bg-black/40"></div>
-
-        <div class="relative z-10 h-full flex items-center px-8 md:px-24">
-            <div>
-                <div class="border-l-4 md:border-l-8 border-white pl-4 md:pl-6">
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-                        Indo
-                        <br>
-                        Berkah Konstruksi
-                    </h1>
-                </div>
-
-                <p class="mt-4 md:mt-8 text-white text-sm">
-                    Menjaga Kualitas Mewujud Berkah
-                </p>
-
-                <button
-                    class="mt-6 md:mt-10 border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 tracking-[2px] md:tracking-[4px] text-sm font-semibold hover:bg-yellow-500 transition"
-                >
-                    <a href="/tentang-kami">Tentang Kami</a>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- KANAN -->
-    <div class="w-full md:w-[25%] bg-gray-300 px-6 md:px-8 py-10 md:py-12">
-        <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-12">
-            Tentang Kami
-        </h2>
-
-        <div class="space-y-6 md:space-y-10">
-            <div>
-                <h3 class="font-bold text-base md:text-xl">
-                    INDO BERKAH KONSTRUKSI
-                    <span class="font-normal"> adalah perusahaan jasa konstruksi yang menyediakan layanan pembangunan rumah, gedung, infrastruktur, renovasi, serta konstruksi besi dan baja. 
-                        Kami siap menangani proyek skala kecil maupun besar dengan kualitas dan profesionalisme terbaik.</span>
-                </h3>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-
-<section id="portofolio" class="py-16 md:py-20 px-4">
-    <div class="max-w-7xl mx-auto">
-
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8 md:mb-10 justify-between">
-
-            <!-- Filter — scroll horizontal di mobile -->
-            <div class="w-full sm:w-auto overflow-x-auto pb-1">
-                <ul class="inline-flex overflow-hidden border border-gray-300 rounded-full bg-white whitespace-nowrap text-sm">
-                    <li><button class="px-4 py-2.5 text-amber-500">Semua</button></li>
-                    <li><button class="px-4 py-2.5 hover:text-amber-400">Pembangunan Rumah</button></li>
-                    <li><button class="px-4 py-2.5 hover:text-amber-400">Gedung Komersial</button></li>
-                    <li><button class="px-4 py-2.5 hover:text-amber-400">Konsultasi</button></li>
-                    <li><button class="px-4 py-2.5 hover:text-amber-400">Renovasi</button></li>
-                </ul>
-            </div>
-
-            <!-- Tombol Panah -->
-            <button class="shrink-0 w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-100 transition">
-                <a href="{{ route('portofolio') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </button>
-
-        </div>
-
-        <!-- Cards scroll horizontal -->
-        <div class="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 -mx-4 px-4">
-
+<!-- =======================
+     ABOUT / TENTANG KAMI 
+======================== -->
+<section id="about" class="py-24 md:py-32 bg-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
             @php
-                $portofolios = [
-                    ['img' => 'porto1.jpg', 'title' => 'Melakukan Desain Interior Di Sesetan', 'cat' => 'Hunian, Interior'],
-                    ['img' => 'porto2.jpg', 'title' => 'Melakukan Desain Interior Di Sesetan', 'cat' => 'Hunian, Interior'],
-                    ['img' => 'porto3.jpg', 'title' => 'Melakukan Desain Interior Di Sesetan', 'cat' => 'Hunian, Interior'],
-                    ['img' => 'porto4.jpg', 'title' => 'Melakukan Desain Interior Di Sesetan', 'cat' => 'Hunian, Interior'],
-                ];
+                $aboutImg = !empty($settings['about_image']) ? (str_starts_with($settings['about_image'], 'image/') ? asset($settings['about_image']) : asset('storage/' . $settings['about_image'])) : asset('image/ElementProgram/foto9.jpg');
             @endphp
 
-            @foreach($portofolios as $p)
-            <div class="group w-64 sm:w-72 md:w-80 shrink-0">
-                <div class="overflow-hidden rounded-lg shadow">
+            <!-- Left: Text -->
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+                    {{ $settings['about_label'] ?? 'Tentang BestBuild Indo Berkah' }}
+                </span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 mb-8 leading-tight tracking-wide">
+                    {{ $settings['about_title_line1'] ?? 'Pelopor Kualitas' }} <br>
+                    <span class="font-bold">{{ $settings['about_title_line2'] ?? 'dan Keunggulan' }}</span><br>
+                    {{ $settings['about_title_line3'] ?? 'dalam Setiap Proyek' }}
+                </h2>
+                <p class="text-gray-500 font-light leading-loose text-sm md:text-base mb-8">
+                    {{ $settings['about_description'] ?? 'INDO BERKAH KONSTRUKSI adalah perusahaan jasa konstruksi yang menyediakan layanan pembangunan rumah, gedung, infrastruktur, renovasi, serta konstruksi besi dan baja.' }}
+                </p>
+                <a href="/tentang-kami" class="inline-flex items-center gap-4 text-xs font-bold tracking-[0.2em] uppercase text-gray-900 hover:text-[#C5A880] transition-colors duration-300">
+                    Pelajari Lebih Lanjut
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+            </div>
+            
+            <!-- Right: Image Composition -->
+            <div class="relative h-[400px] md:h-[500px]" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                <!-- Back Box Accent -->
+                <div class="absolute top-10 right-0 w-3/4 h-full bg-[#FAFAFA] border border-gray-200"></div>
+                <!-- Main Image -->
+                <div class="absolute top-0 left-0 w-4/5 h-4/5 shadow-2xl overflow-hidden">
+                    <img src="{{ $aboutImg }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-1000 brightness-70" alt="Konstruksi">
+                </div>
+                <!-- Floating Info Card -->
+                <div class="absolute bottom-0 right-10 bg-[#111] text-white p-6 md:p-8 shadow-2xl w-2/3 border-t-2 border-[#C5A880]">
+                    <div class="text-3xl md:text-4xl font-light text-[#C5A880] mb-2">{{ $settings['about_experience'] ?? '10+' }}</div>
+                    <div class="text-xs tracking-widest uppercase font-light text-gray-400">{{ $settings['about_experience_text'] ?? 'Tahun Pengalaman Membangun Kepercayaan' }}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =======================
+     PROGRAM KONSTRUKSI 
+======================== -->
+<section id="program" class="py-24 md:py-32 bg-[#FAFAFA]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16 md:mb-24" data-aos="fade-up">
+            <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+                {{ $settings['program_label'] ?? 'Keahlian Kami' }}
+            </span>
+            <h2 class="text-3xl md:text-5xl font-light text-gray-900 tracking-wide">
+                {{ $settings['program_title'] ?? 'Layanan' }} <span class="font-bold">{{ $settings['program_title_bold'] ?? 'Indo Berkah Konstruksi' }}</span>
+            </h2>
+        </div>
+
+        @php
+            $layananCards = [];
+            for ($i = 1; $i <= 4; $i++) {
+                $imgVal = $settings["layanan_{$i}_image"] ?? '';
+                $imgSrc = !empty($imgVal)
+                    ? (str_starts_with($imgVal, 'image/') ? asset($imgVal) : asset('storage/' . $imgVal))
+                    : asset("image/ElementProgram/building-construction-industry-18-svgrepo-com.svg");
+                $layananCards[] = [
+                    'title'       => $settings["layanan_{$i}_title"] ?? "Layanan $i",
+                    'description' => $settings["layanan_{$i}_description"] ?? '',
+                    'image'       => $imgSrc,
+                    'slug'        => $settings["layanan_{$i}_slug"] ?? '',
+                ];
+            }
+        @endphp
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            @foreach($layananCards as $ci => $card)
+            <a href="{{ $card['slug'] ? route('layanan.show', $card['slug']) : '#' }}" class="group block bg-white p-10 border border-gray-100 hover:border-[#C5A880] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500" data-aos="fade-up" data-aos-delay="{{ ($ci + 1) * 100 }}">
+                <div class="w-16 h-16 mb-8 text-[#C5A880] bg-transparent flex items-center justify-center group-hover:-translate-y-2 transition-transform duration-500">
+                    <img src="{{ $card['image'] }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="{{ $card['title'] }}">
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-4 tracking-wide group-hover:text-[#C5A880] transition-colors">
+                    {{ $card['title'] }}
+                </h3>
+                <p class="text-gray-500 text-sm font-light leading-loose">
+                    {{ $card['description'] }}
+                </p>
+            </a>
+            @endforeach
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =======================
+     FEATURED PORTFOLIO 
+======================== -->
+<section id="portofolio" class="py-24 md:py-32 bg-white border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6" data-aos="fade-up">
+            <div>
+                <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+                    Koleksi Pilihan
+                </span>
+                <h2 class="text-3xl md:text-5xl font-light text-gray-900 tracking-wide">
+                    Mahakarya <span class="font-bold">Terbaru</span>
+                </h2>
+            </div>
+            <a href="{{ route('portofolio') }}" class="inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] uppercase border-b border-[#C5A880] text-gray-900 pb-1 hover:text-[#C5A880] transition-colors">
+                Lihat Semua Proyek
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#C5A880]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+
+        <!-- Horizontal scroll / Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            @foreach($portofolios as $index => $p)
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 150 }}">
+                <div class="overflow-hidden bg-black mb-6 shadow-lg relative">
                     <img
-                        src="image/Portofolio/{{ $p['img'] }}"
-                        alt="{{ $p['title'] }}"
-                        class="w-full aspect-[4/3] object-cover group-hover:scale-105 duration-500"
+                        src="{{ $p->main_image ? asset('storage/' . $p->main_image) : asset('image/Logo/logofix.png') }}"
+                        alt="{{ $p->program }}"
+                        class="w-full aspect-[4/3] object-cover group-hover:scale-105 group-hover:opacity-80 transition-all duration-700"
                     >
                 </div>
-                <h3 class="mt-3 md:mt-4 text-base md:text-xl font-bold">{{ $p['title'] }}</h3>
-                <p class="mt-1 md:mt-2 text-gray-500 text-sm">{{ $p['cat'] }}</p>
+                <span class="block text-[10px] tracking-[0.2em] uppercase text-[#C5A880] mb-2 font-medium">
+                    {{ $p->kategori }}
+                </span>
+                <h3 class="text-xl md:text-2xl font-light text-gray-900 tracking-wide group-hover:text-[#C5A880] transition-colors">
+                    {{ $p->program }}
+                </h3>
             </div>
             @endforeach
 
@@ -219,44 +245,149 @@
     </div>
 </section>
 
-<!-- REVIEW -->
-<section id="review" class="py-16 md:py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-4 md:px-6">
-
-        <div class="text-center mb-12 md:mb-20">
-            <span class="text-xs md:text-sm tracking-[0.4em] uppercase text-zinc-400">
-                Client Review
+<!-- =======================
+     TESTIMONIALS / REVIEWS 
+======================== -->
+<section id="reviews" class="py-24 md:py-32 bg-[#111111] text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-16 md:mb-24" data-aos="fade-up">
+            <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+                Review Klien
             </span>
-            <h2 class="mt-3 md:mt-4 text-3xl sm:text-4xl md:text-5xl font-light text-zinc-900">
-                Dipercaya Oleh Banyak Klien
+            <h2 class="text-3xl md:text-5xl font-light tracking-wide">
+                Kepercayaan <span class="font-bold">Mereka</span>
             </h2>
         </div>
 
-        <div class="space-y-12 md:space-y-20">
-
-            @forelse($reviews as $review)
-                <div class="border-l border-zinc-500 pl-6 md:pl-8">
-                    <p class="text-lg sm:text-xl md:text-2xl leading-relaxed text-zinc-700 font-light">
-                        "{{ $review->message }}"
-                    </p>
-                    <div class="mt-5 md:mt-8">
-                        <h4 class="font-medium text-zinc-900">{{ $review->user->name }}</h4>
-                        <p class="text-zinc-400 text-sm mt-1">Klien IBK Construction</p>
+        @if($reviews->count() > 0)
+        <!-- Swiper -->
+        <div class="swiper reviewSwiper" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
+                @foreach($reviews as $review)
+                <div class="swiper-slide">
+                    <div class="bg-[#1a1a1a] p-10 md:p-14 border border-white/10 h-full flex flex-col justify-between hover:border-[#C5A880]/50 transition-colors duration-500">
+                        <div>
+                            @if($review->image)
+                                <img src="{{ Storage::url($review->image) }}" alt="Hasil Pekerjaan" class="w-full h-48 object-cover mb-8 border border-white/10">
+                            @endif
+                            <!-- Quote Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#C5A880] mb-8 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <p class="text-gray-300 font-light leading-relaxed text-sm md:text-base italic mb-10 line-clamp-4">
+                                "{{ $review->message }}"
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-lg">
+                                {{ strtoupper(substr($review->user->name ?? 'User', 0, 1)) }}
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium tracking-wider">{{ $review->user->name ?? 'Anonim' }}</h4>
+                                <span class="text-[10px] text-gray-500 tracking-widest uppercase">{{ $review->created_at->format('d M Y') }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            @empty
-                <div class="border-l border-zinc-500 pl-6 md:pl-8">
-                    <p class="text-zinc-500">Belum ada review dari klien.</p>
-                </div>
-            @endforelse
+                @endforeach
+            </div>
+            <!-- Pagination & Navigation -->
+            <div class="flex justify-center items-center gap-8 mt-12">
+                <div class="swiper-button-prev !static !w-12 !h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:text-[#111] transition-all after:text-sm"></div>
+                <div class="swiper-pagination !static !w-auto"></div>
+                <div class="swiper-button-next !static !w-12 !h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:text-[#111] transition-all after:text-sm"></div>
+            </div>
+        </div>
+        @else
+        <div class="text-center py-10">
+            <p class="text-gray-500 font-light">Belum ada review klien saat ini.</p>
+        </div>
+        @endif
 
+        <!-- Form Tambah Review -->
+        <div class="mt-20 max-w-3xl mx-auto bg-[#1a1a1a] border border-white/10 p-8 md:p-12" data-aos="fade-up" id="tambah-review">
+            <div class="mb-8 text-center">
+                <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-2 font-medium">Pengalaman Anda</span>
+                <h3 class="font-light text-white text-2xl md:text-3xl">Bagikan Testimonial</h3>
+            </div>
+
+            <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                <div>
+                    <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Pesan Review *</label>
+                    <textarea name="message" rows="3" placeholder="Tuliskan kesan dan saran Anda..." required
+                        class="w-full bg-[#111] border-b-2 border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A880] transition-colors resize-none placeholder-gray-600"></textarea>
+                </div>
+                    
+                <div>
+                    <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Foto Hasil Pengerjaan (Opsional)</label>
+                    <input type="file" name="image" accept="image/*"
+                        class="w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-6 file:border-0 file:text-[10px] file:font-bold file:uppercase file:tracking-widest file:bg-[#C5A880] file:text-[#111] hover:file:bg-white hover:file:text-[#111] file:transition-colors file:cursor-pointer bg-[#111] border-b-2 border-white/10 focus:border-[#C5A880] transition-colors">
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full inline-flex items-center justify-center gap-3 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] bg-[#C5A880] text-[#111111] px-8 py-4 hover:bg-transparent hover:text-[#C5A880] transition-all duration-300">
+                        Kirim Review
+                    </button>
+                </div>
+            </form>
+
+            @if(session('success'))
+                <div class="mt-6 p-4 bg-green-900/20 border-l-2 border-green-500 text-green-400 text-sm font-medium tracking-wide">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
     </div>
 </section>
 
 
-<a href="{{ route('penawaran.index') }}" class="float-btn">Buat penawaran </a>
+
 
 @include('layout.footer') 
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        once: true, // Animasi hanya berjalan sekali saat di-scroll
+        offset: 50,
+        duration: 800,
+        easing: 'ease-out-cubic',
+    });
+
+    // Initialize Review Swiper
+    var reviewSwiper = new Swiper(".reviewSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

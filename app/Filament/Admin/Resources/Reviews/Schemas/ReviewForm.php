@@ -13,11 +13,16 @@ class ReviewForm
     {
         return $schema
             ->components([
-                TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                \Filament\Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
                 Textarea::make('message')
                     ->required()
+                    ->columnSpanFull(),
+                \Filament\Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('reviews')
                     ->columnSpanFull(),
                 Toggle::make('is_approved')
                     ->required(),

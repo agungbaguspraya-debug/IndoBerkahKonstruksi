@@ -15,19 +15,25 @@ class ReviewsTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                IconColumn::make('is_approved')
-                    ->boolean(),
+                TextColumn::make('user.name')
+                    ->label('Client')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+                TextColumn::make('message')
+                    ->label('Pesan Review')
+                    ->limit(50)
+                    ->tooltip(fn ($record) => $record->message),
+                \Filament\Tables\Columns\ImageColumn::make('image')
+                    ->disk('public')
+                    ->label('Foto')
+                    ->square(),
+                \Filament\Tables\Columns\ToggleColumn::make('is_approved')
+                    ->label('Disetujui (Web)'),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->dateTime('d M Y, H:i')
+                    ->label('Waktu Kirim')
+                    ->sortable(),
             ])
             ->filters([
                 //

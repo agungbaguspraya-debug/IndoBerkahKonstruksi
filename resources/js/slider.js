@@ -1,4 +1,4 @@
-const images = ["/image/rumah2.jpg", "/image/rumah9.jpg"];
+const images = ["/image/ElementProgram/rumah2.jpg", "/image/ElementProgram/rumah9.jpg"];
 
 const hero = document.getElementById("hero");
 

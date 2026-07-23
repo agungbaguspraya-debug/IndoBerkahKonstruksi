@@ -17,4 +17,9 @@ class CreateUser extends CreateRecord
             ->success()
             ->send();
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

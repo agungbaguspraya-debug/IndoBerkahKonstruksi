@@ -13,5 +13,6 @@ class Penawaran extends Model
         'foto',
         'deskripsi',
         'budget',
+        'alamat',
     ];
 }
