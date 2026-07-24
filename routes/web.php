@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserFileController;
 use App\Http\Controllers\PenawaranController;
+use App\Http\Controllers\SuratPerjanjianController;
 
 
 
@@ -55,6 +56,9 @@ Route::get('/our-team', [TeamMemberController::class, 'index'])->name('our-team'
 
 Route::get('/join-us', [JoinUsController::class, 'index'])->name('join-us');
 Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us.store');
+
+Route::get('/surat-perjanjian', [SuratPerjanjianController::class, 'index'])->name('surat-perjanjian.index');
+Route::post('/surat-perjanjian', [SuratPerjanjianController::class, 'store'])->name('surat-perjanjian.store');
 
 Route::get('/logo-client', function () { return view('frontend.logo-client');
 })->name('logo-client');

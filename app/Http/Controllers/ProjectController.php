@@ -48,13 +48,18 @@ class ProjectController extends Controller
         $progressFiles = $project->files()->progress()->latest()->get();
         $feedbacks = $project->feedbacks()->latest()->get();
         $reviews = $project->reviews()->latest()->get();
+        $suratPerjanjians = \App\Models\SuratPerjanjian::where('email', $user->email)
+            ->orWhere('nama', $user->name)
+            ->latest()
+            ->get();
 
         return view('user.project-detail', compact(
             'project',
             'designFiles',
             'progressFiles',
             'feedbacks',
-            'reviews'
+            'reviews',
+            'suratPerjanjians'
         ));
     }
 }

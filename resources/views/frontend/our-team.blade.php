@@ -22,8 +22,15 @@
                 </h1>
                 <div class="w-16 h-[1px] bg-[#C5A880] mx-auto mb-8"></div>
                 <p class="max-w-2xl mx-auto text-gray-500 leading-relaxed font-light text-sm md:text-base" data-aos="fade-up" data-aos-delay="200">
-                    Kami adalah sekumpulan profesional yang berdedikasi tinggi, menggabungkan keahlian, inovasi, dan integritas untuk memberikan hasil konstruksi terbaik bagi Anda.
+                    Profesional berdedikasi yang menyatukan keahlian, inovasi, dan integritas demi hasil konstruksi terbaik.
                 </p>
+                <div class="mt-6" data-aos="fade-up" data-aos-delay="300">
+                    <p class="text-gray-400 text-xs md:text-sm mb-3 font-light">Ingin menjadi bagian dari tim kami?</p>
+                    <a href="{{ route('join-us') }}" class="inline-flex items-center gap-1 text-[#C5A880] hover:text-gray-800 text-sm font-medium tracking-widest uppercase transition-colors duration-300">
+                        Join Us
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
             </div>
 
             <!-- Team Grid -->

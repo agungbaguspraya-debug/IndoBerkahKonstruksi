@@ -75,6 +75,11 @@
             Upload Desain
         </a>
 
+        <a href="#surat-section" class="flex items-center gap-4 px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors border-l-2 border-transparent" onclick="closeSidebarMobile()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Surat Perjanjian
+        </a>
+
         <a href="#progress-section" class="flex items-center gap-4 px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors border-l-2 border-transparent" onclick="closeSidebarMobile()">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
             Progres
@@ -264,6 +269,81 @@
                                             </div>
                                             <a href="{{ Storage::url($file->file_path) }}" target="_blank"
                                                class="w-8 h-8 bg-white flex items-center justify-center text-gray-900 hover:bg-[#111111] hover:text-white transition-colors border border-gray-200">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- UPLOAD SURAT PERJANJIAN -->
+                <div id="surat-section" class="bg-white border border-gray-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                    <div class="px-8 py-6 border-b border-gray-100">
+                        <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-1 font-medium">Unggah Dokumen Resmi</span>
+                        <h3 class="font-light text-gray-900 text-2xl">Surat Perjanjian</h3>
+                    </div>
+
+                    <div class="p-8">
+                        <form action="{{ route('surat-perjanjian.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                            @csrf
+                            <input type="hidden" name="nama" value="{{ auth()->user()->name }}">
+                            <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+
+                            <label class="block p-10 text-center relative border-2 border-dashed border-gray-200 bg-[#FAFAFA] hover:border-[#C5A880] hover:bg-white transition-colors cursor-pointer" for="surat-file-input">
+                                <input type="file" id="surat-file-input" name="file_surat" accept=".pdf,.doc,.docx" class="hidden" required onchange="updateSuratFileName(this)">
+                                <div id="surat-upload-icon">
+                                    <div class="w-12 h-12 bg-white flex items-center justify-center mx-auto mb-4 border border-gray-100 shadow-sm">
+                                        <svg class="w-5 h-5 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    </div>
+                                    <p class="text-gray-900 font-medium text-sm">Klik atau seret file Surat Perjanjian ke sini</p>
+                                    <p class="text-gray-400 text-xs mt-2 font-light">Maksimal 2MB (Format: PDF, DOC, DOCX)</p>
+                                </div>
+                                <div id="surat-file-name" class="hidden text-[#C5A880] font-bold text-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-white px-4 py-2 border border-gray-100 shadow-sm"></div>
+                            </label>
+
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-3">No. Telepon / WhatsApp</label>
+                                <input type="tel" name="telepon" placeholder="Contoh: 081234567890" value="{{ auth()->user()->phone ?? '' }}"
+                                    class="w-full bg-[#FAFAFA] border-b-2 border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#C5A880] transition-colors">
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-3">Keterangan / Catatan Tambahan</label>
+                                <textarea name="keterangan" rows="2" placeholder="Catatan khusus terkait surat perjanjian (opsional)..."
+                                    class="w-full bg-[#FAFAFA] border-b-2 border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#C5A880] transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full inline-flex items-center justify-center gap-3 text-[11px] font-bold tracking-[0.2em] uppercase bg-[#111111] text-white px-8 py-4 hover:bg-[#C5A880] transition-colors">
+                                Kirim Surat Perjanjian
+                            </button>
+                        </form>
+
+                        @if(session('success'))
+                            <div class="mt-6 p-4 bg-green-50 border border-green-100 flex items-center gap-4">
+                                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <p class="text-green-800 text-sm font-medium tracking-wide">{{ session('success') }}</p>
+                            </div>
+                        @endif
+
+                        @if(isset($suratPerjanjians) && $suratPerjanjians->count() > 0)
+                            <div class="mt-10 pt-8 border-t border-gray-100">
+                                <h4 class="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-4">Riwayat Surat Perjanjian</h4>
+                                <div class="space-y-3">
+                                    @foreach($suratPerjanjians as $surat)
+                                        <div class="flex items-center gap-4 p-4 bg-[#FAFAFA] border border-gray-100 hover:border-[#C5A880] transition-colors group">
+                                            <div class="w-10 h-10 bg-white flex items-center justify-center flex-shrink-0 border border-gray-100">
+                                                <svg class="w-4 h-4 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-medium text-gray-900 truncate">{{ basename($surat->file_surat) }}</p>
+                                                <p class="text-[10px] text-gray-400 uppercase tracking-[0.1em] mt-1">{{ $surat->created_at->format('d M Y, H:i') }}</p>
+                                            </div>
+                                            <a href="{{ Storage::url($surat->file_surat) }}" target="_blank"
+                                               class="w-8 h-8 bg-white flex items-center justify-center text-gray-900 hover:bg-[#111111] hover:text-white transition-colors border border-gray-200" title="Lihat File">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                             </a>
                                         </div>
@@ -491,6 +571,26 @@
         const iconEl = document.getElementById('upload-icon');
         if (input.files.length) {
             nameEl.textContent = input.files[0].name;
+            nameEl.classList.remove('hidden');
+            iconEl.classList.add('opacity-30', 'scale-95');
+        } else {
+            nameEl.classList.add('hidden');
+            iconEl.classList.remove('opacity-30', 'scale-95');
+        }
+    }
+    function updateSuratFileName(input) {
+        const nameEl = document.getElementById('surat-file-name');
+        const iconEl = document.getElementById('surat-upload-icon');
+        if (input.files.length) {
+            const file = input.files[0];
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Ukuran file melebihi 2 MB. Silakan pilih file yang lebih kecil.');
+                input.value = '';
+                nameEl.classList.add('hidden');
+                iconEl.classList.remove('opacity-30', 'scale-95');
+                return;
+            }
+            nameEl.textContent = file.name;
             nameEl.classList.remove('hidden');
             iconEl.classList.add('opacity-30', 'scale-95');
         } else {

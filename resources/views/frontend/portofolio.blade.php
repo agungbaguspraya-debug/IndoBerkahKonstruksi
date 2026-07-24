@@ -15,33 +15,23 @@
     <div class="max-w-7xl mx-auto">
 
         <!-- Filter — scrollable horizontal di mobile -->
+        @php
+            $categories = $portfolios->pluck('kategori')->filter()->unique();
+        @endphp
         <div class="overflow-x-auto pb-2 mb-8 md:mb-10 -mx-4 px-4">
             <ul class="inline-flex overflow-hidden border border-gray-300 rounded-full bg-white whitespace-nowrap text-sm">
                 <li>
-                    <button class="px-4 md:px-5 py-2.5 md:py-3 text-amber-500 hover:bg-amber-50 transition duration-300">
+                    <button onclick="filterPortfolio('all', this)" class="filter-btn px-4 md:px-5 py-2.5 md:py-3 text-amber-500 bg-amber-50 transition duration-300">
                         Semua
                     </button>
                 </li>
+                @foreach($categories as $cat)
                 <li>
-                    <button class="px-4 md:px-5 py-2.5 md:py-3 hover:text-amber-400">
-                        Pembangunan Rumah
+                    <button onclick="filterPortfolio('{{ $cat }}', this)" class="filter-btn px-4 md:px-5 py-2.5 md:py-3 hover:text-amber-400 text-gray-500 transition duration-300">
+                        {{ $cat }}
                     </button>
                 </li>
-                <li>
-                    <button class="px-4 md:px-5 py-2.5 md:py-3 hover:text-amber-400">
-                        Gedung Komersial
-                    </button>
-                </li>
-                <li>
-                    <button class="px-4 md:px-5 py-2.5 md:py-3 hover:text-amber-400">
-                        Konsultasi Konstruksi
-                    </button>
-                </li>
-                <li>
-                    <button class="px-4 md:px-5 py-2.5 md:py-3 hover:text-amber-400">
-                        Renovasi Bangunan
-                    </button>
-                </li>
+                @endforeach
             </ul>
         </div>
 
@@ -49,7 +39,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
 
             @forelse($portfolios as $portfolio)
-            <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer" onclick="openPortfolioModal({{ $portfolio->id }})">
+            <div class="portfolio-item group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer" data-category="{{ $portfolio->kategori }}" onclick="openPortfolioModal({{ $portfolio->id }})">
                 <img
                     src="{{ $portfolio->main_image ? asset('storage/' . $portfolio->main_image) : asset('image/Logo/logofix.png') }}"
                     alt="{{ $portfolio->program }}"
@@ -160,6 +150,27 @@
     function closePortfolioModal() {
         document.getElementById('portfolio-modal').classList.add('hidden');
         document.body.style.overflow = '';
+    }
+
+    function filterPortfolio(category, btnEl) {
+        // Update button styles
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('text-amber-500', 'bg-amber-50');
+            btn.classList.add('text-gray-500');
+        });
+        btnEl.classList.remove('text-gray-500');
+        btnEl.classList.add('text-amber-500', 'bg-amber-50');
+
+        // Filter items
+        const items = document.querySelectorAll('.portfolio-item');
+        items.forEach(item => {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
     }
 </script>
 </body>
