@@ -30,7 +30,13 @@
             transform: scale(1.08);
             filter: brightness(0.65);
         }
-        .split-card:hover .arrow-icon {
+        .left-card:hover .arrow-icon {
+            transform: translate(-6px, -6px);
+            background-color: #C5A880;
+            border-color: #C5A880;
+            color: #111;
+        }
+        .right-card:hover .arrow-icon {
             transform: translate(6px, -6px);
             background-color: #C5A880;
             border-color: #C5A880;
@@ -46,7 +52,7 @@
 <main class="flex-1 flex flex-col md:flex-row w-full h-[100vh] min-h-[600px] overflow-hidden pt-[72px]">
     
     <!-- Left Column: Portofolio -->
-    <a href="{{ route('portofolio.list') }}" class="split-card group relative flex-1 flex items-center justify-center p-8 md:p-16 overflow-hidden border-b md:border-b-0 md:border-r border-white/5 cursor-pointer">
+    <a href="{{ route('portofolio.list') }}" class="split-card left-card group relative flex-1 flex items-center justify-center p-8 md:p-16 overflow-hidden border-b md:border-b-0 md:border-r border-white/5 cursor-pointer">
         <!-- Background Image -->
         <div class="bg-img absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-out filter brightness-[0.4]"
              style="background-image: url('{{ asset('image/Portofolio/porto2.jpg') }}')"></div>
@@ -64,14 +70,15 @@
             <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed mb-8 opacity-80 group-hover:opacity-100 transition-opacity">
                 Saksikan mahakarya arsitektur, hunian mewah, gedung komersial, dan renovasi estetik yang telah kami selesaikan dengan presisi tinggi dan kepuasan maksimal.
             </p>
+            <!-- Arrow pointing LEFT ← -->
             <div class="arrow-icon inline-flex w-14 h-14 rounded-full border border-white/30 items-center justify-center text-white transition-all duration-500">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             </div>
         </div>
     </a>
 
     <!-- Right Column: Video -->
-    <a href="{{ route('video') }}" class="split-card group relative flex-1 flex items-center justify-center p-8 md:p-16 overflow-hidden cursor-pointer">
+    <a href="{{ route('video') }}" class="split-card right-card group relative flex-1 flex items-center justify-center p-8 md:p-16 overflow-hidden cursor-pointer">
         <!-- Background Image -->
         <div class="bg-img absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-out filter brightness-[0.4]"
              style="background-image: url('{{ asset('image/Portofolio/porto3.jpg') }}')"></div>
@@ -89,6 +96,7 @@
             <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed mb-8 opacity-80 group-hover:opacity-100 transition-opacity">
                 Tonton komitmen, kerja keras, dan dedikasi tim konstruksi kami langsung di lapangan dari awal peletakan batu pertama hingga penyelesaian akhir.
             </p>
+            <!-- Arrow pointing RIGHT → -->
             <div class="arrow-icon inline-flex w-14 h-14 rounded-full border border-white/30 items-center justify-center text-white transition-all duration-500">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </div>

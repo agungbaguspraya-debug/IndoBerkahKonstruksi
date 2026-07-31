@@ -66,7 +66,10 @@
     <div class="relative w-full md:w-[55%] h-full flex flex-col justify-center px-6 md:px-16 lg:px-24 z-20 pt-24 md:pt-0">
         
         <!-- Text Content -->
-        <div class="max-w-xl relative z-30" data-aos="fade-up" data-aos-duration="1500">
+        <div class="max-w-xl relative z-30 mt-12 lg:mt-24" data-aos="fade-up" data-aos-duration="1500">
+            <span class="block text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5A880] mb-4 font-bold">
+                Indo Berkah Konstruksi
+            </span>
             <h1 class="text-[2.5rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-medium text-white mb-4 md:mb-6 tracking-wide uppercase">
                 {{ $settings['hero_title_line1'] ?? 'Menjaga Kualitas' }} <br>
                 <span class="italic font-light tracking-normal lowercase text-gray-300">{{ $settings['hero_title_line2'] ?? 'mewujud' }}</span> <br>
@@ -92,9 +95,6 @@
             <h3 class="text-white text-base md:text-xl tracking-widest font-medium uppercase mb-2">
                 {{ $settings['hero_badge_title'] ?? 'Fokus pada Kualitas' }}
             </h3>
-            <p class="text-[10px] md:text-xs text-gray-300 md:text-gray-400 font-light border-t border-gray-500/50 md:border-gray-600/50 pt-2 md:pt-3 w-40 md:w-48">
-                {{ $settings['hero_badge_subtitle'] ?? 'Presisi tingkat tinggi dalam setiap tahap konstruksi.' }}
-            </p>
         </div>
     </div>
 </section>
@@ -113,8 +113,8 @@
 
             <!-- Left: Text -->
             <div data-aos="fade-right" data-aos-duration="1000">
-                <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
-                    {{ $settings['about_label'] ?? 'Tentang BestBuild Indo Berkah' }}
+                <span class="block text-[10px] tracking-[0.3em] uppercase text-[#ffb856] mb-4 font-medium">
+                    {{ $settings['about_label'] ?? ' BestBuild Indo Berkah' }}
                 </span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 mb-8 leading-tight tracking-wide">
                     {{ $settings['about_title_line1'] ?? 'Pelopor Kualitas' }} <br>
@@ -166,17 +166,45 @@
         </div>
 
         @php
+            $defaultLayanan = [
+                1 => [
+                    'title' => 'Pembangunan Rumah',
+                    'description' => 'Kami menyediakan layanan pembangunan rumah dari tahap perencanaan hingga selesai dengan desain mewah dan material premium.',
+                    'image' => 'image/ElementProgram/building-construction-industry-18-svgrepo-com.svg',
+                    'slug' => 'pembangunan-rumah'
+                ],
+                2 => [
+                    'title' => 'Gedung Komersial',
+                    'description' => 'Melayani pembangunan gedung komersial dengan standar internasional, fokus pada efisiensi serta ketahanan struktur.',
+                    'image' => 'image/ElementProgram/building-construction-industry-5-svgrepo-com.svg',
+                    'slug' => 'gedung-komersial'
+                ],
+                3 => [
+                    'title' => 'Renovasi Bangunan',
+                    'description' => 'Solusi renovasi cerdas untuk meningkatkan nilai estetika, fungsi, dan kenyamanan properti eksklusif Anda.',
+                    'image' => 'image/ElementProgram/building-concrete-construction-svgrepo-com.svg',
+                    'slug' => 'renovasi-bangunan'
+                ],
+                4 => [
+                    'title' => 'Konsultasi Ahli',
+                    'description' => 'Konsultasi perencanaan desain dan manajemen konstruksi mendalam untuk memastikan mahakarya Anda terwujud sempurna.',
+                    'image' => 'image/ElementProgram/blueprint-building-construction-svgrepo-com.svg',
+                    'slug' => 'konsultasi-ahli'
+                ]
+            ];
+
             $layananCards = [];
             for ($i = 1; $i <= 4; $i++) {
                 $imgVal = $settings["layanan_{$i}_image"] ?? '';
                 $imgSrc = !empty($imgVal)
                     ? (str_starts_with($imgVal, 'image/') ? asset($imgVal) : asset('storage/' . $imgVal))
-                    : asset("image/ElementProgram/building-construction-industry-18-svgrepo-com.svg");
+                    : asset($defaultLayanan[$i]['image']);
+                
                 $layananCards[] = [
-                    'title'       => $settings["layanan_{$i}_title"] ?? "Layanan $i",
-                    'description' => $settings["layanan_{$i}_description"] ?? '',
+                    'title'       => $settings["layanan_{$i}_title"] ?? $defaultLayanan[$i]['title'],
+                    'description' => $settings["layanan_{$i}_description"] ?? $defaultLayanan[$i]['description'],
                     'image'       => $imgSrc,
-                    'slug'        => $settings["layanan_{$i}_slug"] ?? '',
+                    'slug'        => $settings["layanan_{$i}_slug"] ?? $defaultLayanan[$i]['slug'],
                 ];
             }
         @endphp

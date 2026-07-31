@@ -22,7 +22,7 @@
             Kabar Terbaru
         </span>
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-tight tracking-wide mb-6">
-            Berita & <span class="font-light italic lowercase text-gray-300">Artikel</span>
+            News  & <span class="font-light italic lowercase text-gray-300">Event</span>
         </h1>
         <p class="text-gray-300 text-sm md:text-base font-light max-w-2xl mx-auto">
             Temukan informasi terkini seputar dunia konstruksi, tips arsitektur, dan update proyek dari Indo Berkah Konstruksi.

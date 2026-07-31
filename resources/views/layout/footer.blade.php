@@ -9,7 +9,7 @@
             <!-- Company -->
             <div class="lg:col-span-1">
                 <h3 class="text-lg font-light tracking-[0.25em] uppercase text-white mb-6 flex items-center gap-3">
-                    Indo Berkah
+                    Indo Berkah Konstruksi
                 </h3>
                 <p class="text-gray-500 font-light leading-loose text-sm">
                     {{ $settings['footer_company_text'] ?? 'Menghadirkan mahakarya arsitektur dan konstruksi dengan standar kualitas premium, presisi, dan dedikasi penuh.' }}

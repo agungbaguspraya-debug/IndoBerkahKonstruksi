@@ -10,7 +10,6 @@
         <a href="/" class="w-10 h-10 rounded-full bg-cover bg-center block border border-[#C5A880]/30 hover:border-[#C5A880] transition-colors duration-500"
         style="background-image: url('{{ asset('image/Logo/Logo PT. Indo Berkah.png') }}')">
         </a>
-        <span class="font-light tracking-[0.2em] text-[#C5A880] text-sm uppercase hidden sm:block">Indo Berkah Konstruksi </span>
     </div>
 
     <!-- Menu desktop -->
@@ -155,18 +154,21 @@ function toggleLangMenu() {
 }
 
 function changeLang(lang) {
-    // Tunggu Google Translate siap
-    const tryChange = (attempts) => {
-        const select = document.querySelector('.goog-te-combo');
-        if (select) {
-            select.value = lang;
-            select.dispatchEvent(new Event('change'));
-            document.getElementById('lang-menu').style.display = 'none';
-        } else if (attempts > 0) {
-            setTimeout(() => tryChange(attempts - 1), 300);
-        }
-    };
-    tryChange(10);
+    // Sembunyikan menu dropdown
+    document.getElementById('lang-menu').style.display = 'none';
+
+    if (lang === 'id') {
+        // Hapus cookie terjemahan untuk kembali ke bahasa asli (Indonesia)
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+    } else {
+        // Set cookie terjemahan ke bahasa tujuan
+        document.cookie = "googtrans=/id/" + lang + "; path=/;";
+        document.cookie = "googtrans=/id/" + lang + "; domain=" + window.location.hostname + "; path=/;";
+    }
+    
+    // Refresh halaman agar script Google Translate membaca cookie baru
+    window.location.reload();
 }
 
 // Tutup dropdown saat klik di luar

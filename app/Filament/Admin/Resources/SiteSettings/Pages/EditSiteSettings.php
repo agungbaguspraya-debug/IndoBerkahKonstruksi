@@ -21,10 +21,70 @@ class EditSiteSettings extends Page
 
     public ?array $data = [];
 
+    /**
+     * Nilai-nilai default yang sama persis dengan yang ditampilkan di frontend.
+     * Jika admin belum pernah menyimpan suatu field, form akan menampilkan
+     * teks ini (bukan field kosong), sehingga admin tahu apa yang sedang ditampilkan.
+     */
+    private array $defaults = [
+        // Identitas & Footer
+        'company_name'             => 'Indo Berkah Konstruksi',
+        'footer_telepon'           => '+62 878 6530 9966',
+        'footer_email'             => 'partners@indoberkahkonstruksi.com',
+        'footer_company_text'      => 'Menghadirkan mahakarya arsitektur dan konstruksi dengan standar kualitas premium, presisi, dan dedikasi penuh.',
+        'footer_tagline'           => 'Menjaga Kualitas Mewujud Berkah',
+        'footer_eksplorasi_label'  => 'Eksplorasi',
+        'footer_keahlian_label'    => 'Keahlian Kami',
+        'footer_kontak_label'      => 'Konsultasi',
+        'footer_keahlian_1'        => 'Hunian Mewah',
+        'footer_keahlian_2'        => 'Komersial Premium',
+        'footer_keahlian_3'        => 'Desain Interior',
+        'footer_keahlian_4'        => 'Manajemen Konstruksi',
+
+        // Hero
+        'hero_title_line1'  => 'Menjaga Kualitas',
+        'hero_title_line2'  => 'mewujud',
+        'hero_title_line3'  => 'Berkah.',
+        'hero_subtitle'     => 'Membangun lingkungan masa depan yang berdampak. Kami memadukan estetika modern dengan ketahanan struktur tak tertandingi.',
+        'hero_badge_title'  => 'Fokus pada Kualitas',
+        'hero_badge_subtitle' => 'Presisi tingkat tinggi dalam setiap tahap konstruksi.',
+
+        // Tentang Kami
+        'about_label'           => 'BestBuild Indo Berkah',
+        'about_title_line1'     => 'Pelopor Kualitas',
+        'about_title_line2'     => 'dan Keunggulan',
+        'about_title_line3'     => 'dalam Setiap Proyek',
+        'about_description'     => 'INDO BERKAH KONSTRUKSI adalah perusahaan jasa konstruksi yang menyediakan layanan pembangunan rumah, gedung, infrastruktur, renovasi, serta konstruksi besi dan baja.',
+        'about_experience'      => '10+',
+        'about_experience_text' => 'Tahun Pengalaman Membangun Kepercayaan',
+
+        // Layanan
+        'program_label'      => 'Keahlian Kami',
+        'program_title'      => 'Layanan',
+        'program_title_bold' => 'Indo Berkah Konstruksi',
+        'layanan_1_title'    => 'Pembangunan Rumah',
+        'layanan_1_slug'     => 'pembangunan-rumah',
+        'layanan_1_description' => 'Kami menyediakan layanan pembangunan rumah dari tahap perencanaan hingga selesai dengan desain mewah dan material premium.',
+        'layanan_2_title'    => 'Gedung Komersial',
+        'layanan_2_slug'     => 'gedung-komersial',
+        'layanan_2_description' => 'Melayani pembangunan gedung komersial dengan standar internasional, fokus pada efisiensi serta ketahanan struktur.',
+        'layanan_3_title'    => 'Renovasi Bangunan',
+        'layanan_3_slug'     => 'renovasi-bangunan',
+        'layanan_3_description' => 'Solusi renovasi cerdas untuk meningkatkan nilai estetika, fungsi, dan kenyamanan properti eksklusif Anda.',
+        'layanan_4_title'    => 'Konsultasi Ahli',
+        'layanan_4_slug'     => 'konsultasi-ahli',
+        'layanan_4_description' => 'Konsultasi perencanaan desain dan manajemen konstruksi mendalam untuk memastikan mahakarya Anda terwujud sempurna.',
+    ];
+
     public function mount(): void
     {
-        $settings = SiteSetting::all()->pluck('value', 'key')->toArray();
-        $this->data = $settings;
+        // Ambil data yang sudah tersimpan di database
+        $saved = SiteSetting::all()->pluck('value', 'key')->toArray();
+
+        // Gabungkan: default dahulu, lalu timpa dengan nilai yang sudah disimpan admin.
+        // Hasilnya: field yang belum pernah disimpan akan menampilkan teks default frontend,
+        // bukan field kosong.
+        $this->data = array_merge($this->defaults, $saved);
     }
 
     public function form(Schema $schema): Schema

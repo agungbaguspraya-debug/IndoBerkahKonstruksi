@@ -1,94 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $service['title'] }} - Layanan</title>
+    <title>{{ $service['title'] }} - Indo Berkah Konstruksi</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
-    @include('layout.header')
-    
-    <main class="pt-32 pb-24 md:pt-40 md:pb-32 px-6 md:px-12 min-h-screen">
-        <div class="max-w-4xl mx-auto">
-            <!-- Header Section -->
-            <div class="relative bg-white border border-gray-100 rounded-3xl p-10 md:p-16 mb-16 md:mb-20 shadow-sm overflow-hidden" data-aos="fade-up">
-                <!-- Decorative background elements -->
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-[#C5A880]/5 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-gray-100 rounded-full blur-3xl"></div>
-                
-                <div class="relative z-10 text-center">
-                    <div class="w-20 h-20 mx-auto mb-8 text-[#C5A880] bg-gray-50 rounded-2xl shadow-inner border border-gray-100 flex items-center justify-center p-5" data-aos="zoom-in" data-aos-delay="100">
-                        <img src="{{ asset($service['icon']) }}" class="w-full h-full object-contain opacity-90" alt="{{ $service['title'] }}">
-                    </div>
-                    <p class="uppercase tracking-[0.3em] text-[#C5A880] text-xs md:text-sm mb-4 font-bold" data-aos="fade-down" data-aos-delay="200">
-                        Detail Layanan
-                    </p>
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-wide" data-aos="fade-up" data-aos-delay="300">
-                        {{ $service['title'] }}
-                    </h1>
-                    <div class="w-16 h-[2px] bg-[#C5A880] mx-auto mb-8"></div>
-                    <p class="text-gray-500 leading-relaxed font-light text-lg md:text-xl text-center max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="400">
-                        {{ $service['description'] }}
-                    </p>
-                </div>
-            </div>
+<body class="bg-[#FAFAFA] text-gray-900 font-sans antialiased overflow-x-hidden">
 
-            <!-- Tata Cara Pemesanan -->
-            <div class="bg-white rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-gray-100 p-8 md:p-12 mb-16" data-aos="fade-up">
-                <h2 class="text-2xl md:text-3xl font-light text-gray-900 mb-12 text-center tracking-wide">
-                    Tata Cara <span class="font-bold text-[#C5A880]">Pemesanan & Kolaborasi</span>
-                </h2>
-                
-                <div class="relative">
-                    <!-- Vertical Line -->
-                    <div class="absolute left-[15px] md:left-[31px] top-4 bottom-4 w-[2px] bg-[#C5A880]/20"></div>
+@include('layout.header')
+
+<!-- =======================
+     HERO SECTION LAYANAN
+======================== -->
+<section class="relative w-full pt-32 pb-16 md:pt-40 md:pb-24 bg-[#3b2d2a] text-center overflow-hidden">
+    <!-- Background element -->
+    <div class="absolute inset-0 flex items-center justify-center opacity-5">
+        <img src="{{ asset($service['icon']) }}" alt="Background" class="w-[500px] h-[500px] object-contain grayscale invert">
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-6 relative z-20" data-aos="fade-up" data-aos-duration="1200">
+        <span class="block text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5A880] mb-4 font-bold">
+            Detail Layanan
+        </span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-tight tracking-wide mb-6">
+            {{ $service['title'] }}
+        </h1>
+        <p class="text-gray-300 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed">
+            {{ $service['description'] }}
+        </p>
+    </div>
+</section>
+
+<!-- =======================
+     TATA CARA PEMESANAN / STEPS
+======================== -->
+<section class="py-24 md:py-32 bg-white relative">
+    <div class="max-w-5xl mx-auto px-6 md:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-16 md:mb-24" data-aos="fade-up">
+            <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+                Langkah Mudah
+            </span>
+            <h2 class="text-3xl md:text-5xl font-light text-gray-900 tracking-wide">
+                Tata Cara <span class="font-bold">Pemesanan</span>
+            </h2>
+        </div>
+
+        <div class="relative mt-12 md:mt-0">
+            <!-- Vertical Line for Desktop -->
+            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-gray-100 -translate-x-1/2"></div>
+            
+            <div class="space-y-16 md:space-y-0 relative">
+                @foreach($service['steps'] as $index => $step)
+                <div class="relative flex flex-col md:flex-row items-center justify-between group" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                     
-                    <div class="space-y-8">
-                        @foreach($service['steps'] as $index => $step)
-                        <div class="group relative pl-12 md:pl-20" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 50 }}">
-                            <!-- Circle -->
-                            <div class="absolute left-0 md:left-4 top-4 w-8 h-8 rounded-full bg-white border-2 border-[#C5A880] group-hover:bg-[#C5A880] transition-colors duration-300 flex items-center justify-center shadow-sm z-10">
-                                <span class="text-[#C5A880] group-hover:text-white font-bold text-xs transition-colors duration-300">{{ $index + 1 }}</span>
+                    <!-- Left Side (Empty on odd, content on even in mobile it's different) -->
+                    <div class="w-full md:w-5/12 {{ $index % 2 == 0 ? 'md:text-right md:pr-12' : 'md:order-3 md:pl-12' }}">
+                        <div class="bg-white p-8 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-gray-100 group-hover:border-[#C5A880]/30 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 relative">
+                            <!-- Mobile Number Badge -->
+                            <div class="md:hidden absolute -top-5 -left-5 w-10 h-10 rounded-full bg-[#C5A880] text-white flex items-center justify-center font-bold text-sm shadow-lg border-4 border-white">
+                                0{{ $index + 1 }}
                             </div>
                             
-                            <!-- Card Content -->
-                            <div class="bg-gray-50/50 group-hover:bg-[#C5A880]/5 p-6 rounded-2xl border border-transparent group-hover:border-[#C5A880]/20 transition-all duration-300">
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#C5A880] transition-colors duration-300">{{ $step['title'] }}</h3>
-                                <p class="text-gray-500 font-light text-sm md:text-base leading-relaxed">
-                                    {{ $step['desc'] }}
-                                </p>
-                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 tracking-wide group-hover:text-[#C5A880] transition-colors mt-2 md:mt-0">
+                                {{ $step['title'] }}
+                            </h3>
+                            <p class="text-gray-500 font-light text-sm leading-loose">
+                                {{ $step['desc'] }}
+                            </p>
                         </div>
-                        @endforeach
                     </div>
+
+                    <!-- Center Connector (Circle) -->
+                    <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white border-4 border-gray-100 items-center justify-center z-10 group-hover:border-[#C5A880] group-hover:bg-[#C5A880] transition-all duration-500 {{ $index % 2 == 0 ? 'md:order-2' : 'md:order-2' }}">
+                        <span class="text-gray-400 font-bold text-sm group-hover:text-white transition-colors duration-500">0{{ $index + 1 }}</span>
+                    </div>
+                    
+                    <!-- Right Side Empty Placeholder for alignment -->
+                    <div class="hidden md:block w-5/12 {{ $index % 2 == 0 ? 'md:order-3' : 'md:order-1' }}"></div>
                 </div>
+                @endforeach
             </div>
-
-            <!-- CTA -->
-            <div class="text-center" data-aos="zoom-in">
-                <h3 class="text-2xl font-light mb-6 text-gray-900">Tertarik untuk memulai proyek Anda?</h3>
-                <a href="{{ route('penawaran.index', ['layanan' => $service['slug']]) }}" class="inline-block bg-[#C5A880] hover:bg-[#b09570] text-white font-medium text-sm tracking-[0.2em] uppercase px-10 py-5 rounded-md transition-all duration-300 shadow-lg shadow-[#C5A880]/30 hover:shadow-[#C5A880]/50 hover:-translate-y-1">
-                    Ajukan Kolaborasi
-                </a>
-            </div>
-            
         </div>
-    </main>
 
-    @include('layout.footer')
+    </div>
+</section>
+
+<!-- =======================
+     CALL TO ACTION (AJUKAN KOLABORASI)
+======================== -->
+<section class="py-24 bg-[#111111] text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#111] via-[#1a1514] to-[#111]"></div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 1000,
-                    once: true,
-                    offset: 50,
-                });
-            }
+    <!-- Premium Accent Elements -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-[#C5A880]/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10" data-aos="zoom-in" data-aos-duration="1000">
+        <span class="block text-[10px] tracking-[0.3em] uppercase text-[#C5A880] mb-4 font-medium">
+            Mulai Sekarang
+        </span>
+        <h2 class="text-3xl md:text-5xl font-light tracking-wide mb-6">
+            Siap Mewujudkan <span class="font-bold text-white">Proyek Anda?</span>
+        </h2>
+        <p class="text-gray-400 font-light mb-12 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            Mulai langkah pertama untuk membangun struktur premium impian Anda bersama tim ahli Indo Berkah Konstruksi.
+        </p>
+        <a href="{{ route('penawaran.index') }}" class="inline-flex items-center justify-center gap-4 text-xs font-bold tracking-[0.2em] uppercase bg-[#C5A880] text-[#111111] px-10 py-5 hover:bg-white hover:text-[#111111] transition-all duration-500 shadow-[0_10px_30px_rgba(197,168,128,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.4)]">
+            Ajukan Kolaborasi
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+    </div>
+</section>
+
+@include('layout.footer')
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>

@@ -62,11 +62,26 @@ class LayananController extends Controller
 
     public function show($slug)
     {
-        if (!array_key_exists($slug, $this->services)) {
-            abort(404);
+        if (array_key_exists($slug, $this->services)) {
+            $service = $this->services[$slug];
+        } else {
+            // Fallback dinamis jika admin mengubah slug dari Filament / Site Settings
+            $title = ucwords(str_replace('-', ' ', $slug));
+            $service = [
+                'title' => $title,
+                'icon' => 'image/ElementProgram/blueprint-building-construction-svgrepo-com.svg',
+                'description' => 'Layanan profesional ' . $title . ' yang dirancang khusus untuk memenuhi standar kualitas premium dan kebutuhan spesifik proyek Anda.',
+                'steps' => [
+                    ['title' => 'Konsultasi Awal', 'desc' => 'Diskusi mendalam mengenai visi, kebutuhan teknis, dan rancangan anggaran proyek Anda.'],
+                    ['title' => 'Survei & Analisis', 'desc' => 'Tim ahli kami akan melakukan pengecekan dan studi kelayakan secara langsung.'],
+                    ['title' => 'Desain & RAB', 'desc' => 'Pembuatan rancangan (desain) dan Rencana Anggaran Biaya (RAB) secara transparan.'],
+                    ['title' => 'Kesepakatan Kontrak', 'desc' => 'Penandatanganan kontrak kerja yang jelas dan berorientasi pada kepuasan klien.'],
+                    ['title' => 'Pelaksanaan Proyek', 'desc' => 'Proses eksekusi pekerjaan yang diawasi dengan standar K3 dan kontrol kualitas yang ketat.'],
+                    ['title' => 'Serah Terima', 'desc' => 'Penyerahan hasil akhir pekerjaan yang telah melewati tahap quality checking 100%.']
+                ]
+            ];
         }
 
-        $service = $this->services[$slug];
         $service['slug'] = $slug;
 
         return view('frontend.layanan.show', compact('service'));
