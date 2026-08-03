@@ -291,41 +291,60 @@
 
         @if($reviews->count() > 0)
         <!-- Swiper -->
-        <div class="swiper reviewSwiper" data-aos="fade-up" data-aos-delay="200">
-            <div class="swiper-wrapper">
-                @foreach($reviews as $review)
-                <div class="swiper-slide">
-                    <div class="bg-[#1a1a1a] p-10 md:p-14 border border-white/10 h-full flex flex-col justify-between hover:border-[#C5A880]/50 transition-colors duration-500">
-                        <div>
-                            @if($review->image)
-                                <img src="{{ Storage::url($review->image) }}" alt="Hasil Pekerjaan" class="w-full h-48 object-cover mb-8 border border-white/10">
-                            @endif
-                            <!-- Quote Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#C5A880] mb-8 opacity-50" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                            </svg>
-                            <p class="text-gray-300 font-light leading-relaxed text-sm md:text-base italic mb-10 line-clamp-4">
-                                "{{ $review->message }}"
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-lg">
-                                {{ strtoupper(substr($review->user->name ?? 'User', 0, 1)) }}
-                            </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+
+            <!-- Autoplay Progress Bar -->
+            <div class="relative mb-6 h-0.5 bg-white/10 max-w-xs mx-auto rounded-full overflow-hidden">
+                <div id="review-progress" class="h-full bg-[#C5A880] rounded-full" style="width: 0%; transition: width linear;"></div>
+            </div>
+
+            <!-- Slide Counter -->
+            <div class="text-center mb-8">
+                <span id="review-counter" class="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-medium">
+                    <span id="review-current">1</span> / <span id="review-total">{{ $reviews->count() }}</span>
+                </span>
+            </div>
+
+            <div class="swiper reviewSwiper">
+                <div class="swiper-wrapper">
+                    @foreach($reviews as $review)
+                    <div class="swiper-slide">
+                        <div class="bg-[#1a1a1a] p-10 md:p-14 border border-white/10 h-full flex flex-col justify-between hover:border-[#C5A880]/50 transition-colors duration-500">
                             <div>
-                                <h4 class="text-white font-medium tracking-wider">{{ $review->user->name ?? 'Anonim' }}</h4>
-                                <span class="text-[10px] text-gray-500 tracking-widest uppercase">{{ $review->created_at->format('d M Y') }}</span>
+                                @if($review->image)
+                                    <img src="{{ Storage::url($review->image) }}" alt="Hasil Pekerjaan" class="w-full h-48 object-cover mb-8 border border-white/10 rounded">
+                                @endif
+                                <!-- Quote Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#C5A880] mb-8 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                </svg>
+                                <p class="text-gray-300 font-light leading-relaxed text-sm md:text-base italic mb-10 line-clamp-4">
+                                    "{{ $review->message }}"
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#C5A880] to-[#9c7f5f] flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                    {{ strtoupper(substr($review->user->name ?? 'User', 0, 1)) }}
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium tracking-wider">{{ $review->user->name ?? 'Anonim' }}</h4>
+                                    <span class="text-[10px] text-gray-500 tracking-widest uppercase">{{ $review->created_at->format('d M Y') }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
-            <!-- Pagination & Navigation -->
-            <div class="flex justify-center items-center gap-8 mt-12">
-                <div class="swiper-button-prev !static !w-12 !h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:text-[#111] transition-all after:text-sm"></div>
-                <div class="swiper-pagination !static !w-auto"></div>
-                <div class="swiper-button-next !static !w-12 !h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:text-[#111] transition-all after:text-sm"></div>
+                <!-- Navigation -->
+                <div class="flex justify-center items-center gap-8 mt-12">
+                    <button class="swiper-button-prev-custom group w-12 h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:border-[#C5A880] transition-all duration-300 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white group-hover:text-[#111] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <div class="swiper-pagination-custom flex items-center gap-2"></div>
+                    <button class="swiper-button-next-custom group w-12 h-12 border border-white/20 rounded-full hover:bg-[#C5A880] hover:border-[#C5A880] transition-all duration-300 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white group-hover:text-[#111] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
         @else
@@ -392,31 +411,93 @@
     });
 
     // Initialize Review Swiper
+    const REVIEW_AUTOPLAY_DELAY = 5000;
+    const progressBar = document.getElementById('review-progress');
+    const currentEl = document.getElementById('review-current');
+    let progressInterval = null;
+    let progressStart = null;
+
+    function startProgress() {
+        if (!progressBar) return;
+        clearInterval(progressInterval);
+        progressStart = Date.now();
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        // Force reflow
+        progressBar.offsetWidth;
+        progressBar.style.transition = 'width ' + REVIEW_AUTOPLAY_DELAY + 'ms linear';
+        progressBar.style.width = '100%';
+    }
+
     var reviewSwiper = new Swiper(".reviewSwiper", {
         slidesPerView: 1,
-        spaceBetween: 30,
+        spaceBetween: 32,
         loop: true,
+        loopAdditionalSlides: 2,
+        speed: 800,
         autoplay: {
-            delay: 5000,
+            delay: REVIEW_AUTOPLAY_DELAY,
             disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            waitForTransition: false,
         },
         pagination: {
-            el: ".swiper-pagination",
+            el: ".swiper-pagination-custom",
             clickable: true,
+            renderBullet: function (index, className) {
+                return '<span class="' + className + ' inline-block w-2 h-2 rounded-full bg-white/20 cursor-pointer transition-all duration-300"></span>';
+            },
         },
         navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
+            nextEl: ".swiper-button-next-custom",
+            prevEl: ".swiper-button-prev-custom",
         },
         breakpoints: {
-            768: {
-                slidesPerView: 2,
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+        },
+        on: {
+            init: function () {
+                startProgress();
+                if (currentEl) currentEl.textContent = this.realIndex + 1;
+                // Pastikan autoplay benar-benar berjalan
+                var sw = this;
+                setTimeout(function() {
+                    if (sw.autoplay && !sw.autoplay.running) {
+                        sw.autoplay.start();
+                    }
+                }, 100);
             },
-            1024: {
-                slidesPerView: 3,
-            }
+            slideChange: function () {
+                startProgress();
+                if (currentEl) currentEl.textContent = this.realIndex + 1;
+            },
+            autoplayPause: function () {
+                if (progressBar) {
+                    const elapsed = Date.now() - progressStart;
+                    const pct = Math.min((elapsed / REVIEW_AUTOPLAY_DELAY) * 100, 100);
+                    progressBar.style.transition = 'none';
+                    progressBar.style.width = pct + '%';
+                }
+            },
+            autoplayResume: function () {
+                startProgress();
+            },
         }
     });
+
+    // Pastikan autoplay mulai setelah halaman selesai load
+    window.addEventListener('load', function() {
+        if (reviewSwiper && reviewSwiper.autoplay) {
+            reviewSwiper.autoplay.start();
+            startProgress();
+        }
+    });
+
+    // Style active pagination bullet
+    const style = document.createElement('style');
+    style.textContent = '.swiper-pagination-custom .swiper-pagination-bullet-active { background-color: #C5A880 !important; width: 1.5rem !important; border-radius: 9999px !important; }';
+    document.head.appendChild(style);
 </script>
 
 </body>

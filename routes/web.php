@@ -89,8 +89,8 @@ Route::get('/', function () {
 
     $reviews = review::with('user')
         ->where('is_approved', true)
-        ->latest()
-        ->take(6)
+        ->inRandomOrder()
+        ->take(5)
         ->get();
         
     $portofolios = \App\Models\Portfolio::inRandomOrder()->take(6)->get();
