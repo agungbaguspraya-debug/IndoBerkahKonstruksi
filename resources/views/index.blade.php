@@ -360,33 +360,46 @@
                 <h3 class="font-light text-white text-2xl md:text-3xl">Bagikan Testimonial</h3>
             </div>
 
-            <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                @csrf
-                <div>
-                    <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Pesan Review *</label>
-                    <textarea name="message" rows="3" placeholder="Tuliskan kesan dan saran Anda..." required
-                        class="w-full bg-[#111] border-b-2 border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A880] transition-colors resize-none placeholder-gray-600"></textarea>
-                </div>
-                    
-                <div>
-                    <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Foto Hasil Pengerjaan (Opsional)</label>
-                    <input type="file" name="image" accept="image/*"
-                        class="w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-6 file:border-0 file:text-[10px] file:font-bold file:uppercase file:tracking-widest file:bg-[#C5A880] file:text-[#111] hover:file:bg-white hover:file:text-[#111] file:transition-colors file:cursor-pointer bg-[#111] border-b-2 border-white/10 focus:border-[#C5A880] transition-colors">
-                </div>
+            @auth
+                <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+                    <div>
+                        <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Pesan Review *</label>
+                        <textarea name="message" rows="3" placeholder="Tuliskan kesan dan saran Anda..." required
+                            class="w-full bg-[#111] border-b-2 border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A880] transition-colors resize-none placeholder-gray-600"></textarea>
+                    </div>
 
-                <div class="pt-4">
-                    <button type="submit"
-                        class="w-full inline-flex items-center justify-center gap-3 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] bg-[#C5A880] text-[#111111] px-8 py-4 hover:bg-transparent hover:text-[#C5A880] transition-all duration-300">
-                        Kirim Review
-                    </button>
-                </div>
-            </form>
+                    <div>
+                        <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Foto Hasil Pengerjaan (Opsional)</label>
+                        <input type="file" name="image" accept="image/*"
+                            class="w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-6 file:border-0 file:text-[10px] file:font-bold file:uppercase file:tracking-widest file:bg-[#C5A880] file:text-[#111] hover:file:bg-white hover:file:text-[#111] file:transition-colors file:cursor-pointer bg-[#111] border-b-2 border-white/10 focus:border-[#C5A880] transition-colors">
+                    </div>
 
-            @if(session('success'))
-                <div class="mt-6 p-4 bg-green-900/20 border-l-2 border-green-500 text-green-400 text-sm font-medium tracking-wide">
-                    {{ session('success') }}
+                    <div class="pt-4">
+                        <button type="submit"
+                            class="w-full inline-flex items-center justify-center gap-3 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] bg-[#C5A880] text-[#111111] px-8 py-4 hover:bg-transparent hover:text-[#C5A880] transition-all duration-300">
+                            Kirim Review
+                        </button>
+                    </div>
+                </form>
+
+                @if(session('success'))
+                    <div class="mt-6 p-4 bg-green-900/20 border-l-2 border-green-500 text-green-400 text-sm font-medium tracking-wide">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            @else
+                {{-- Belum login: tampilkan pesan & tombol login --}}
+                <div class="text-center py-6 space-y-5">
+                    <p class="text-gray-400 text-sm tracking-wide">
+                        Silakan <span class="text-[#C5A880] font-medium">masuk ke akun</span> Anda terlebih dahulu untuk memberikan testimonial.
+                    </p>
+                    <a href="{{ route('login') }}"
+                        class="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] text-[#C5A880] px-8 py-4 hover:bg-[#C5A880] hover:text-[#111] transition-all duration-300">
+                        Masuk / Login
+                    </a>
                 </div>
-            @endif
+            @endauth
         </div>
     </div>
 </section>
