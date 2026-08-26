@@ -1,5 +1,5 @@
 <?php
-use App\Models\review;
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReviewController;
@@ -87,7 +87,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/', function () {
 
-    $reviews = review::with('user')
+    $reviews = Review::with('user')
         ->where('is_approved', true)
         ->inRandomOrder()
         ->take(5)
