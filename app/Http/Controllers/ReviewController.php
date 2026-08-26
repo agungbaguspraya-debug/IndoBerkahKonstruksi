@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\review;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +21,7 @@ class ReviewController extends Controller
             $imagePath = $request->file('image')->store('reviews', 'public');
         }
 
-        review::create([
+        Review::create([
             'user_id'    => Auth::id(),
             'project_id' => $request->project_id,
             'message'    => $request->message,
