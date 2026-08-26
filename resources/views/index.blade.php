@@ -114,7 +114,7 @@
             <!-- Left: Text -->
             <div data-aos="fade-right" data-aos-duration="1000">
                 <span class="block text-[10px] tracking-[0.3em] uppercase text-[#ffb856] mb-4 font-medium">
-                    {{ $settings['about_label'] ?? ' BestBuild Indo Berkah' }}
+                    {{ $settings['about_label'] ?? ' BestBuild Indo Berkah Konstruksi' }}
                 </span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 mb-8 leading-tight tracking-wide">
                     {{ $settings['about_title_line1'] ?? 'Pelopor Kualitas' }} <br>
