@@ -13,7 +13,7 @@ class ReviewController extends Controller
         $request->validate([
             'message'    => 'required|max:500',
             'image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'project_id' => 'nullable|exists:projects,id',
+            'project_id' => 'required|exists:projects,id',
         ]);
 
         $imagePath = null;
