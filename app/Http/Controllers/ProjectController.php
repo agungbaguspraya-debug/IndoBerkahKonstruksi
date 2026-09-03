@@ -41,17 +41,28 @@ class ProjectController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Ensure user can only see their own projects
-        abort_if($project->user_id !== $user->id, 403);
+        // Ensure user can only see their own projects, unless admin
+        abort_if($user->role !== 'admin' && $project->user_id !== $user->id, 403, 'Anda tidak memiliki akses ke proyek ini.');
 
         $designFiles = $project->files()->designs()->latest()->get();
         $progressFiles = $project->files()->progress()->latest()->get();
         $feedbacks = $project->feedbacks()->latest()->get();
         $reviews = $project->reviews()->latest()->get();
-        $suratPerjanjians = \App\Models\SuratPerjanjian::where('email', $user->email)
-            ->orWhere('nama', $user->name)
+
+        $projectOwner = $project->user;
+        $suratPerjanjians = collect();
+        if ($projectOwner) {
+            $suratPerjanjians = \App\Models\SuratPerjanjian::where(function ($query) use ($projectOwner) {
+                if (!empty($projectOwner->email)) {
+                    $query->where('email', $projectOwner->email);
+                }
+                if (!empty($projectOwner->name)) {
+                    $query->orWhere('nama', $projectOwner->name);
+                }
+            })
             ->latest()
             ->get();
+        }
 
         return view('user.project-detail', compact(
             'project',

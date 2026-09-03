@@ -361,6 +361,19 @@
             </div>
 
             @auth
+                <div class="mb-6 flex items-center justify-between pb-4 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#C5A880] to-[#9c7f5f] flex items-center justify-center text-white font-bold text-sm shadow">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400">Menulis review sebagai:</p>
+                            <p class="text-sm text-white font-medium">{{ Auth::user()->name }}</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] uppercase tracking-widest text-[#C5A880] border border-[#C5A880]/30 px-2.5 py-1 rounded">Terverifikasi</span>
+                </div>
+
                 <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <div>
@@ -368,7 +381,7 @@
                         <textarea name="message" rows="3" placeholder="Tuliskan kesan dan saran Anda..." required
                             class="w-full bg-[#111] border-b-2 border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A880] transition-colors resize-none placeholder-gray-600"></textarea>
                     </div>
-
+                        
                     <div>
                         <label class="block text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">Foto Hasil Pengerjaan (Opsional)</label>
                         <input type="file" name="image" accept="image/*"
@@ -390,14 +403,28 @@
                 @endif
             @else
                 {{-- Belum login: tampilkan pesan & tombol login --}}
-                <div class="text-center py-6 space-y-5">
-                    <p class="text-gray-400 text-sm tracking-wide">
-                        Silakan <span class="text-[#C5A880] font-medium">masuk ke akun</span> Anda terlebih dahulu untuk memberikan testimonial.
-                    </p>
-                    <a href="{{ route('login') }}"
-                        class="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] text-[#C5A880] px-8 py-4 hover:bg-[#C5A880] hover:text-[#111] transition-all duration-300">
-                        Masuk / Login
-                    </a>
+                <div class="text-center py-8 space-y-6">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#C5A880]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white text-base font-light mb-2">Ingin membagikan pengalaman Anda?</p>
+                        <p class="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+                            Silakan <span class="text-[#C5A880] font-medium">masuk ke akun</span> Anda terlebih dahulu untuk memberikan testimonial pengerjaan proyek.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                        <a href="{{ route('login') }}"
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#C5A880] bg-[#C5A880] text-[#111] px-8 py-4 hover:bg-transparent hover:text-[#C5A880] transition-all duration-300">
+                            Masuk / Login
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase border border-white/20 text-white px-8 py-4 hover:border-[#C5A880] hover:text-[#C5A880] transition-all duration-300">
+                            Daftar Akun Baru
+                        </a>
+                    </div>
                 </div>
             @endauth
         </div>

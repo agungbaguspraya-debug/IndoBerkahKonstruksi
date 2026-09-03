@@ -15,7 +15,15 @@ class TeamMembersTable
         return $table
             ->columns([
                 TextColumn::make('nama')
-                    ->searchable(),
+                    ->label('Nama Lengkap (Admin)')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+                TextColumn::make('nama_pendek')
+                    ->label('Nama Pendek (Web)')
+                    ->searchable()
+                    ->sortable()
+                    ->placeholder('-'),
                 TextColumn::make('posisi')
                     ->label('Posisi')
                     ->searchable(),
@@ -64,7 +72,13 @@ class TeamMembersTable
                             'start_date' => $data['start_date'],
                             'is_visible' => true,
                         ]);
-                        \Illuminate\Support\Facades\Mail::to($record->email)->send(new \App\Mail\ApplicationAccepted($record));
+                        if (!empty($record->email)) {
+                            try {
+                                \Illuminate\Support\Facades\Mail::to($record->email)->send(new \App\Mail\ApplicationAccepted($record));
+                            } catch (\Throwable $e) {
+                                \Illuminate\Support\Facades\Log::warning('Gagal kirim email diterima: ' . $e->getMessage());
+                            }
+                        }
                         \Filament\Notifications\Notification::make()
                             ->title('Pelamar Diterima')
                             ->success()
@@ -86,7 +100,13 @@ class TeamMembersTable
                             'rejection_reason' => $data['rejection_reason'],
                             'is_visible' => false,
                         ]);
-                        \Illuminate\Support\Facades\Mail::to($record->email)->send(new \App\Mail\ApplicationRejected($record));
+                        if (!empty($record->email)) {
+                            try {
+                                \Illuminate\Support\Facades\Mail::to($record->email)->send(new \App\Mail\ApplicationRejected($record));
+                            } catch (\Throwable $e) {
+                                \Illuminate\Support\Facades\Log::warning('Gagal kirim email ditolak: ' . $e->getMessage());
+                            }
+                        }
                         \Filament\Notifications\Notification::make()
                             ->title('Pelamar Ditolak')
                             ->success()

@@ -44,8 +44,16 @@
                     
                     <div>
                         <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                        <input type="text" name="nama" id="nama" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C5A880] focus:border-transparent outline-none transition-all bg-gray-50">
+                        <input type="text" name="nama" id="nama" value="{{ old('nama') }}" required placeholder="Contoh: Budi Santoso, S.T." class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C5A880] focus:border-transparent outline-none transition-all bg-gray-50">
+                        <p class="text-gray-400 text-xs mt-1">Nama lengkap hanya dapat diketahui oleh pihak admin/manajemen.</p>
                         @error('nama') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="nama_pendek" class="block text-sm font-medium text-gray-700 mb-2">Nama Pendek / Panggilan *</label>
+                        <input type="text" name="nama_pendek" id="nama_pendek" value="{{ old('nama_pendek') }}" required placeholder="Contoh: Budi" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C5A880] focus:border-transparent outline-none transition-all bg-gray-50">
+                        <p class="text-[#C5A880] text-xs mt-1">Nama ini yang akan ditampilkan di profil website publik (Our Team).</p>
+                        @error('nama_pendek') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>

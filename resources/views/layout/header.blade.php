@@ -41,9 +41,27 @@
  
 
     <!-- Action (Desktop) -->
-    <div class="hidden md:flex items-center gap-6 shrink-0">
-        <a href="/login" class="text-xs font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-[#C5A880] transition-colors duration-300">Masuk</a>
-        <a href="/register" class="text-xs font-medium tracking-[0.15em] uppercase border border-[#C5A880]/50 text-[#C5A880] px-6 py-2.5 hover:bg-[#C5A880] hover:text-white transition-all duration-500">Daftar</a>
+    <div class="hidden md:flex items-center gap-4 shrink-0">
+        @auth
+            @if(Auth::user()->role === 'admin')
+                <a href="/admin" class="text-xs font-medium tracking-[0.15em] uppercase border border-[#C5A880]/50 text-[#C5A880] px-4 py-2 hover:bg-[#C5A880] hover:text-white transition-all duration-300">
+                    Admin Panel
+                </a>
+            @else
+                <a href="/dashbord" class="text-xs font-medium tracking-[0.15em] uppercase border border-[#C5A880]/50 text-[#C5A880] px-4 py-2 hover:bg-[#C5A880] hover:text-white transition-all duration-300">
+                    Dashboard
+                </a>
+            @endif
+            <form action="/logout" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="text-xs font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-red-400 transition-colors duration-300">
+                    Keluar
+                </button>
+            </form>
+        @else
+            <a href="/login" class="text-xs font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-[#C5A880] transition-colors duration-300">Masuk</a>
+            <a href="/register" class="text-xs font-medium tracking-[0.15em] uppercase border border-[#C5A880]/50 text-[#C5A880] px-6 py-2.5 hover:bg-[#C5A880] hover:text-white transition-all duration-500">Daftar</a>
+        @endauth
     </div>
 
     <!-- Mobile Menu Button -->
@@ -69,8 +87,20 @@
         <li><a href="{{ route('berita.index') }}" class="block hover:text-[#C5A880] transition-colors">News & Event</a></li>
         
         <li class="flex flex-col gap-4 pt-6 border-t border-white/10 mt-2">
-            <a href="/login" class="text-center py-3.5 border border-gray-700 hover:border-[#C5A880] hover:text-[#C5A880] transition-colors tracking-widest">Masuk</a>
-            <a href="/register" class="text-center py-3.5 bg-[#C5A880] text-[#111] font-medium hover:bg-[#A68A60] transition-colors tracking-widest">Daftar</a>
+            @auth
+                @if(Auth::user()->role === 'admin')
+                    <a href="/admin" class="text-center py-3.5 bg-[#C5A880] text-[#111] font-medium hover:bg-[#A68A60] transition-colors tracking-widest">Admin Panel</a>
+                @else
+                    <a href="/dashbord" class="text-center py-3.5 bg-[#C5A880] text-[#111] font-medium hover:bg-[#A68A60] transition-colors tracking-widest">Dashboard Saya</a>
+                @endif
+                <form action="/logout" method="POST" class="w-full">
+                    @csrf
+                    <button type="submit" class="w-full text-center py-3.5 border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-colors tracking-widest uppercase text-xs">Keluar / Logout</button>
+                </form>
+            @else
+                <a href="/login" class="text-center py-3.5 border border-gray-700 hover:border-[#C5A880] hover:text-[#C5A880] transition-colors tracking-widest">Masuk</a>
+                <a href="/register" class="text-center py-3.5 bg-[#C5A880] text-[#111] font-medium hover:bg-[#A68A60] transition-colors tracking-widest">Daftar</a>
+            @endauth
         </li>
     </ul>
 </div>

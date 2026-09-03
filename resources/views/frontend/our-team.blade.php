@@ -55,7 +55,7 @@
                             <!-- Info Container -->
                             <div class="p-5 flex flex-col flex-grow relative z-10 bg-white text-center">
                                 <h3 class="text-base md:text-lg font-medium text-gray-800 mb-1 group-hover:text-[#C5A880] transition-colors duration-300">
-                                    {{ $member->nama }}
+                                    {{ $member->nama_pendek ?: $member->nama }}
                                 </h3>
                                 @if($member->posisi)
                                 <p class="text-xs text-gray-500 mb-2 font-medium">{{ $member->posisi }}</p>

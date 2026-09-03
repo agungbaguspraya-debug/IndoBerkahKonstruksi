@@ -60,18 +60,21 @@ Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us.store
 Route::get('/surat-perjanjian', [SuratPerjanjianController::class, 'index'])->name('surat-perjanjian.index');
 Route::post('/surat-perjanjian', [SuratPerjanjianController::class, 'store'])->name('surat-perjanjian.store');
 
-Route::get('/logo-client', function () { return view('frontend.logo-client');
-})->name('logo-client');
-
-Route::get('/parent-client', function () { return view('frontend.partner-client');
+Route::get('/partner-client', function () { 
+    return view('frontend.partner-client');
 })->name('partner-client');
+Route::redirect('/parent-client', '/partner-client');
+Route::redirect('/logo-client', '/partner-client');
 
 // user dashboard & projects
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/dashbord', function () {
-        $projects = auth()->user()->projects()->latest()->get();
+        $user = auth()->user();
+        $projects = $user->role === 'admin'
+            ? \App\Models\Project::latest()->get()
+            : $user->projects()->latest()->get();
         return view('user.dashbord', compact('projects'));
-    });
+    })->name('dashboard');
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/dashbord/project/{project}', [ProjectController::class, 'show'])->name('projects.show');
 });

@@ -16,6 +16,7 @@ class JoinUsController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
+            'nama_pendek' => 'required|string|max:50',
             'email' => 'required|email|max:255',
             'telepon' => 'required|string|max:20',
             'profil_singkat' => 'required|string',

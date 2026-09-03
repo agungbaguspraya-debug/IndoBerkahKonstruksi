@@ -21,10 +21,13 @@ class UserFileController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        $project = \App\Models\Project::findOrFail($request->project_id);
+        abort_if($user->role !== 'admin' && $project->user_id !== $user->id, 403, 'Anda tidak memiliki akses ke proyek ini.');
+
         $path = $request->file('file')->store('user-designs/' . $user->id, 'public');
 
         UserFile::create([
-            'user_id'     => $user->id,
+            'user_id'     => $project->user_id, // tautkan ke pemilik proyek
             'project_id'  => $request->project_id,
             'title'       => $request->title,
             'description' => $request->description,
@@ -40,7 +43,7 @@ class UserFileController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        abort_if($userFile->user_id !== $user->id, 403);
+        abort_if($user->role !== 'admin' && ($userFile->user_id !== $user->id || $userFile->type !== 'design'), 403);
 
         Storage::disk('public')->delete($userFile->file_path);
         $userFile->delete();

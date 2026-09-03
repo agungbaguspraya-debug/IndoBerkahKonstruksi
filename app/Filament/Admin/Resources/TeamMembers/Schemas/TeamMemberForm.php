@@ -14,6 +14,13 @@ class TeamMemberForm
         return $schema
             ->components([
                 TextInput::make('nama')
+                    ->label('Nama Lengkap (Khusus Admin)')
+                    ->helperText('Hanya dapat dilihat oleh admin.')
+                    ->required(),
+                TextInput::make('nama_pendek')
+                    ->label('Nama Pendek / Panggilan (Publik)')
+                    ->helperText('Nama ini yang ditampilkan di website publik (Our Team).')
+                    ->placeholder('Contoh: Budi')
                     ->required(),
                 \Filament\Forms\Components\Select::make('posisi')
                     ->options([

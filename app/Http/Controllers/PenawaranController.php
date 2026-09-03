@@ -16,6 +16,7 @@ class PenawaranController extends Controller
             'foto'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'deskripsi' => 'required|string',
             'budget'    => 'required|string',
+            'alamat'    => 'nullable|string|max:500',
         ]);
 
         $fotoPath = null;

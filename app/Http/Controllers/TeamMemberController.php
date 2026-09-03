@@ -10,7 +10,14 @@ class TeamMemberController extends Controller
     {
         $teamMembers = \App\Models\TeamMember::where('is_visible', true)
             ->where('status', 'accepted')
-            ->get();
+            ->get()
+            ->map(function ($member) {
+                // Di frontend hanya menampilkan nama pendek untuk publik
+                $member->nama = $member->nama_pendek ?: $member->nama;
+                return $member;
+            })
+            ->makeHidden(['email', 'telepon', 'alamat', 'rejection_reason']);
+
         return view('frontend.our-team', compact('teamMembers'));
     }
 }
