@@ -22,7 +22,8 @@ class PortfoliosTable
                 TextColumn::make('waktu_pengerjaan')
                     ->date()
                     ->sortable(),
-                ImageColumn::make('main_image'),
+                ImageColumn::make('main_image')
+                    ->disk('public'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

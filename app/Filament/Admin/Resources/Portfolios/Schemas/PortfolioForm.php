@@ -22,11 +22,13 @@ class PortfolioForm
                 DatePicker::make('waktu_pengerjaan'),
                 FileUpload::make('main_image')
                     ->image()
+                    ->disk('public')
                     ->directory('portfolios')
                     ->visibility('public'),
                 FileUpload::make('gallery')
                     ->image()
                     ->multiple()
+                    ->disk('public')
                     ->directory('portfolios/galleries')
                     ->visibility('public'),
             ]);
